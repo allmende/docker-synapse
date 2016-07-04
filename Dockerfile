@@ -32,7 +32,8 @@ RUN pip install --upgrade pip setuptools
 ENV INVALIDATEBUILD=notinvalidated
 
 # install synapse homeserver
-ENV BV_SYN=master
+ENV BV_SYN=release-v0.16.1
+
 RUN curl -fSL https://github.com/matrix-org/synapse/archive/$BV_SYN.zip -o s.zip \
     && unzip s.zip \
     && rm s.zip \
