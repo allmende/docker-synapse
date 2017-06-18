@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 # Maintainer
-MAINTAINER Silvio Fricke <silvio.fricke@gmail.com> + jon richter <almereyda@allmende.io>
+MAINTAINER Silvio Fricke <silvio.fricke@gmail.com>, jon richter <almereyda@allmende.io>
 
 # install homerserver template
 COPY adds/start.sh /start.sh
@@ -12,7 +12,7 @@ CMD ["start"]
 EXPOSE 8448
 VOLUME ["/data"]
 
-ARG BV_SYN=v0.18.7
+ARG BV_SYN=v0.21.1
 
 # update and upgrade
 RUN chmod a+x /start.sh ;\
