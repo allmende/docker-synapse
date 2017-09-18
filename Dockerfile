@@ -12,11 +12,22 @@ CMD ["start"]
 EXPOSE 8448
 VOLUME ["/data"]
 
-ARG BV_SYN=v0.21.1
+# Git branch to build from
+ARG BV_SYN=v0.22.1
+# https://github.com/python-pillow/Pillow/issues/1763
+ENV LIBRARY_PATH=/lib:/usr/lib
 
-# update and upgrade
-RUN chmod a+x /start.sh ;\
-    export DEBIAN_FRONTEND=noninteractive \
+# user configuration
+ENV MATRIX_UID=991 MATRIX_GID=991
+
+# use --build-arg REBUILD=$(date) to invalidate the cache and upgrade all
+# packages
+ARG REBUILD=1
+RUN set -ex \
+    && mkdir /uploads \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && mkdir -p /var/cache/apt/archives \
+    && touch /var/cache/apt/archives/lock \
     && apt-get clean \
     && apt-get update -y \
     && apt-get upgrade -y \
@@ -55,9 +66,8 @@ RUN chmod a+x /start.sh ;\
         sqlite \
         zlib1g \
         zlib1g-dev \
-	build-essential \
     ; \
-    pip install --upgrade pip setuptools ;\
+    pip install --upgrade pip ;\
     pip install --upgrade python-ldap ;\
     pip install --upgrade lxml \
     ;\
@@ -69,7 +79,7 @@ RUN chmod a+x /start.sh ;\
     && cd / \
     && rm -rf /synapse \
     ; \
-    apt-get remove -y \
+    apt-get autoremove -y \
         file \
         gcc \
         git \
@@ -86,6 +96,7 @@ RUN chmod a+x /start.sh ;\
         make \
         python-dev \
         zlib1g-dev \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/* ;\
+    ; \
+    apt-get autoremove -y ;\
+    rm -rf /var/lib/apt/* /var/cache/apt/* ;\
 
