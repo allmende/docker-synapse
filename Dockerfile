@@ -69,6 +69,9 @@ RUN set -ex \
     ; \
     pip install --upgrade pip ;\
     pip install --upgrade python-ldap ;\
+    pip install --upgrade pyopenssl ;\
+    pip install --upgrade enum34 ;\
+    pip install --upgrade ipaddress ;\
     pip install --upgrade lxml \
     ;\
     git clone --branch $BV_SYN --depth 1 https://github.com/matrix-org/synapse.git 	\
