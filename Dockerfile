@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 
 # Maintainer
 MAINTAINER Silvio Fricke <silvio.fricke@gmail.com>, jon richter <almereyda@allmende.io>
@@ -13,7 +13,7 @@ EXPOSE 8448
 VOLUME ["/data"]
 
 # Git branch to build from
-ARG BV_SYN=v0.25.1
+ARG BV_SYN=v0.26.0
 # https://github.com/python-pillow/Pillow/issues/1763
 ENV LIBRARY_PATH=/lib:/usr/lib
 
